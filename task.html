@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Expense Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: pink;
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            width: 360px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: skyblue;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: green;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f4f4f4;
+            margin: 5px 0;
+            padding: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .summary {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Expense Manager</h2>
+
+    <label>Monthly Income</label>
+    <input type="number" id="income" placeholder="Enter monthly income">
+
+    <label>Expense Name</label>
+    <input type="text" id="expenseName" placeholder="Enter expense name">
+
+    <label>Expense Amount</label> 
+    <input type="number" id="expenseAmount" placeholder="Enter expense amount">
+
+    <button onclick="addExpense()">Add Expense</button>
+
+    <h3>Expense List</h3>
+    <ul id="expenseList"></ul>
+
+    <div class="summary">
+        <p>Total Expenses: ₹ <span id="totalExpenses">0</span></p>
+        <p>Savings: ₹ <span id="savings">0</span></p>
+    </div>
+</div>
+
+<script>
+    let totalExpenses = 0;
+
+    function addExpense() {
+        const income = Number(document.getElementById("income").value);
+        const expenseName = document.getElementById("expenseName").value;
+        const expenseAmount = Number(document.getElementById("expenseAmount").value);
+
+        if (!income || !expenseName || !expenseAmount) {
+            alert("Please fill all fields");
+            return;
+        }
+
+        // Add expense to list
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `${expenseName} <span>₹${expenseAmount}</span>`;
+        document.getElementById("expenseList").appendChild(listItem);
+
+        // Update total expenses
+        totalExpenses += expenseAmount;
+        document.getElementById("totalExpenses").innerText = totalExpenses;
+
+        // Calculate savings
+        const savings = income - totalExpenses;
+        document.getElementById("savings").innerText = savings;
+
+        // Clear inputs
+        document.getElementById("expenseName").value = "";
+        document.getElementById("expenseAmount").value = "";
+    }
+</script>
+
+</body>
+</html>
